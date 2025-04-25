@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://cv7f00gumo58s"]
+
+[ext_resource type="ArrayMesh" uid="uid://dykqqiwtimw51" path="res://models/spray_hands.res" id="1_dbsmn"]
+[ext_resource type="Script" uid="uid://dschif56fjf6f" path="res://scripts/spray.gd" id="1_p3bhx"]
+[ext_resource type="Material" uid="uid://bmn5pgr4x1neg" path="res://materials/Material.tres" id="2_p3bhx"]
+[ext_resource type="AudioStream" uid="uid://drm3qh20vbh88" path="res://sounds/spray-01.mp3" id="4_5ncba"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5ncba"]
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+inherit_velocity_ratio = 1.0
+direction = Vector3(-1, 0, 0)
+spread = 18.976
+initial_velocity_min = 1.0
+initial_velocity_max = 3.0
+gravity = Vector3(-1, 0, 0)
+scale_min = 0.01
+scale_max = 0.02
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ncba"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8216x"]
+material = SubResource("StandardMaterial3D_5ncba")
+
+[node name="Spray" type="Node3D"]
+script = ExtResource("1_p3bhx")
+
+[node name="SprayHands" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0976878, -0.0185154, -0.0106899, -0.0213798, -0.0846001, -0.0488439, 0, 0.05, -0.0866025, -0.0235526, 1.19209e-07, 0.0913468)
+mesh = ExtResource("1_dbsmn")
+surface_material_override/0 = ExtResource("2_p3bhx")
+surface_material_override/1 = ExtResource("2_p3bhx")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0740717, 0.184098, -0.0161239)
+emitting = false
+amount = 18
+lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_5ncba")
+draw_pass_1 = SubResource("BoxMesh_8216x")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.595224, 0.327899, 0.428308)
+target_position = Vector3(0, -5.5, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.33474, 0.445244)
+stream = ExtResource("4_5ncba")

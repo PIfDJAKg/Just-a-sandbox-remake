@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://vhep5rw2yoaa"]
+
+[ext_resource type="Texture2D" uid="uid://bklgcky6hmman" path="res://textures/image-removebg-preview (48) (1).png" id="1_cg44k"]
+
+[sub_resource type="GDScript" id="GDScript_gg7bg"]
+script/source = "extends Node3D
+
+func _ready() -> void:
+	await get_tree().create_timer(20).timeout
+	queue_free()
+"
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cg44k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cbqm3"]
+transparency = 1
+albedo_texture = ExtResource("1_cg44k")
+
+[node name="Node3D" type="Node3D"]
+script = SubResource("GDScript_gg7bg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(6.6874e-17, 8.26145e-09, -0.035, 0.035, -8.26145e-09, -1.06158e-23, -1.5299e-09, -0.189, -1.5299e-09, 0, 0, -0.0104117)
+mesh = SubResource("PlaneMesh_cg44k")
+surface_material_override/0 = SubResource("StandardMaterial3D_cbqm3")

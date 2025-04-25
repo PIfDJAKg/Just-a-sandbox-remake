@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqun6j64boy61"]
+
+[ext_resource type="Script" uid="uid://baar2qldqw5pq" path="res://scripts/svabra.gd" id="1_gym4e"]
+[ext_resource type="ArrayMesh" uid="uid://dt0k0t6h2rhqb" path="res://models/svabra.res" id="2_gym4e"]
+[ext_resource type="ArrayMesh" uid="uid://b4nubgyj6u1x3" path="res://models/vedro.res" id="3_tpc7d"]
+
+[node name="Svabra" type="Node3D"]
+script = ExtResource("1_gym4e")
+
+[node name="Svabra" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.16, 0, -2.41593e-08, 0, 0.16, 0, 2.41593e-08, 0, -0.16, -0.284904, -0.948393, -0.0911839)
+mesh = ExtResource("2_gym4e")
+
+[node name="Vedro" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.14, 0, 0, 0, 0.14, 0, 0, 0, 0.14, -0.160626, -0.237046, 1.0048)
+mesh = ExtResource("3_tpc7d")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.595224, 0.327899, 0.428308)
+target_position = Vector3(0, -5.5, 0)
+collision_mask = 268435457

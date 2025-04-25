@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bd7jkwv5u0l16"
+path="res://.godot/imported/shoot-01.mp3-706c21ce1ae88b2aa5a63f267c62df37.mp3str"
+
+[deps]
+
+source_file="res://sounds/pump-action shotgun/shoot/shoot-01.mp3"
+dest_files=["res://.godot/imported/shoot-01.mp3-706c21ce1ae88b2aa5a63f267c62df37.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

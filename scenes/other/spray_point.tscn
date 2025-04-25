@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://008hfv1slpf0"]
+
+[ext_resource type="Texture2D" uid="uid://c4k27x3gbml2q" path="res://textures/spray_point.png" id="1_ys737"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cg44k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cbqm3"]
+transparency = 1
+albedo_texture = ExtResource("1_ys737")
+uv1_scale = Vector3(-0.9, -0.9, -0.9)
+uv1_offset = Vector3(-0.1, -0.045, 0)
+
+[sub_resource type="GDScript" id="GDScript_ys737"]
+script/source = "extends StaticBody3D
+
+func woshing():
+	$\"..\".queue_free()
+"
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ys737"]
+height = 0.001
+radius = 0.0566406
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.14641e-16, 1.41625e-08, -0.06, 0.06, -1.41625e-08, -5.00759e-22, -2.62268e-09, -0.324, -2.62268e-09, 0.001, 0, -0.001)
+mesh = SubResource("PlaneMesh_cg44k")
+surface_material_override/0 = SubResource("StandardMaterial3D_cbqm3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 268435456
+script = SubResource("GDScript_ys737")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.00271675, 0)
+shape = SubResource("CylinderShape3D_ys737")

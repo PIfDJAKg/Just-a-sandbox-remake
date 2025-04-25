@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7505vnxfd501"]
+
+[ext_resource type="ArrayMesh" uid="uid://cp3tr7p36ejny" path="res://models/gilza_Plane.res" id="1_3gag3"]
+
+[sub_resource type="GDScript" id="GDScript_3gag3"]
+script/source = "extends RigidBody3D
+
+func _ready() -> void:
+	
+	await get_tree().create_timer(2).timeout
+	queue_free()
+"
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hfj3v"]
+height = 0.0993042
+radius = 0.0185547
+
+[node name="gilza_red" type="RigidBody3D"]
+collision_layer = 2
+script = SubResource("GDScript_3gag3")
+
+[node name="GilzaPlane" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-09, 0.1, 0, -0.1, -4.37114e-09, 0, 0, 0, 0.1, 0.021841, 0, 0)
+mesh = ExtResource("1_3gag3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.000152588, 6.66904e-12, 0)
+shape = SubResource("CylinderShape3D_hfj3v")
+debug_color = Color(1, 0, 0.188235, 1)

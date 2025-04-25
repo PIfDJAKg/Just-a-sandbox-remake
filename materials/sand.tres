@@ -1,0 +1,21 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://vdsqb5405g1l"]
+
+[ext_resource type="Texture2D" uid="uid://egxe3uhb7l7g" path="res://textures/sand/Ground080_1K-JPG_Color.jpg" id="1_ydoqr"]
+[ext_resource type="Texture2D" uid="uid://dfbntw7aqi0ap" path="res://textures/sand/Ground080_1K-JPG_NormalGL.jpg" id="2_3lvva"]
+[ext_resource type="Texture2D" uid="uid://dkeiex5kq7f5v" path="res://textures/sand/Ground080_1K-JPG_Roughness.jpg" id="3_6xis2"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ydoqr"]
+
+[resource]
+albedo_color = Color(0.961629, 0.895314, 0.746429, 1)
+albedo_texture = ExtResource("1_ydoqr")
+metallic_specular = 0.0
+roughness = 0.0
+roughness_texture = ExtResource("3_6xis2")
+normal_enabled = true
+normal_scale = 1.36
+normal_texture = ExtResource("2_3lvva")
+ao_texture = SubResource("CompressedTexture2D_ydoqr")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+uv1_world_triplanar = true

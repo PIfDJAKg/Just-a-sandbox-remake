@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dsc5vc3c6c6ee"
+path="res://.godot/imported/-03.mp3-cea42d5785bd6347dce501e1f1093190.mp3str"
+
+[deps]
+
+source_file="res://sounds/pump-action shotgun/refresh/-03.mp3"
+dest_files=["res://.godot/imported/-03.mp3-cea42d5785bd6347dce501e1f1093190.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

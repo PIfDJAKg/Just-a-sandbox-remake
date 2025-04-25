@@ -1,0 +1,450 @@
+[gd_scene load_steps=20 format=3 uid="uid://dq8gu4kdvnqle"]
+
+[ext_resource type="Script" uid="uid://bs7j5cmlsdqpe" path="res://scripts/main_menu.gd" id="1_vjb58"]
+[ext_resource type="Theme" uid="uid://dke7f2bsi2nfp" path="res://other/themes/theme.tres" id="1_yqeox"]
+[ext_resource type="Texture2D" uid="uid://dhsjk30tna4ir" path="res://textures/fnEp6TKz4o.png" id="2_4ytvr"]
+[ext_resource type="AudioStream" uid="uid://bb1g8sy3228yg" path="res://sounds/select.mp3" id="3_mhnvy"]
+[ext_resource type="Script" uid="uid://ctnuf38rvccr2" path="res://scripts/quit_msg_panel.gd" id="4_mj5lg"]
+[ext_resource type="AudioStream" uid="uid://bh37y4mtttgnq" path="res://sounds/yaaaaaaaaay-fnaf.mp3" id="5_ufwb2"]
+[ext_resource type="Texture2D" uid="uid://cxso3tayxhsta" path="res://textures/ELGATO/crying_Elgato.png" id="6_13sgg"]
+[ext_resource type="Script" uid="uid://bfeq0wm31s85v" path="res://scripts/settings_panel.gd" id="6_g3eks"]
+[ext_resource type="AudioStream" uid="uid://b3q0fj2tbg0o1" path="res://sounds/ekhkh-bliat.mp3" id="6_ufwb2"]
+[ext_resource type="Texture2D" uid="uid://d2jwc8o2r3r8g" path="res://textures/ELGATO/Elgato.png" id="7_i6lef"]
+[ext_resource type="FontFile" uid="uid://ds6henl5roygm" path="res://other/fonts/SpriteGraffiti-Shadow.otf" id="10_6cdou"]
+[ext_resource type="FontFile" uid="uid://8gskd081nn61" path="res://other/fonts/SpriteGraffiti-Regular.otf" id="13_6cdou"]
+[ext_resource type="Script" uid="uid://bilfes44bqrvk" path="res://scenes/game_settings_panel.gd" id="13_7jp70"]
+[ext_resource type="FontFile" uid="uid://crqhx2kkmwe22" path="res://other/fonts/ofont.ru_Downtown.ttf" id="14_i42df"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_i42df"]
+font = ExtResource("10_6cdou")
+font_size = 48
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ytvr"]
+bg_color = Color(0.11, 0.11, 0.11, 0.588235)
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="LabelSettings" id="LabelSettings_7jp70"]
+font = ExtResource("13_6cdou")
+font_size = 46
+
+[sub_resource type="LabelSettings" id="LabelSettings_mxgkd"]
+font = ExtResource("14_i42df")
+font_size = 45
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g3eks"]
+bg_color = Color(0.11, 0.11, 0.11, 0.588235)
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vjb58")
+
+[node name="BG" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("2_4ytvr")
+
+[node name="QuitMsgPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -315.0
+offset_top = -168.0
+offset_right = 315.0
+offset_bottom = 168.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_yqeox")
+script = ExtResource("4_mj5lg")
+
+[node name="Yaaaaaaaaa" type="AudioStreamPlayer" parent="QuitMsgPanel"]
+stream = ExtResource("5_ufwb2")
+
+[node name="Ehhhh" type="AudioStreamPlayer" parent="QuitMsgPanel"]
+stream = ExtResource("6_ufwb2")
+
+[node name="press" type="AudioStreamPlayer" parent="QuitMsgPanel"]
+stream = ExtResource("3_mhnvy")
+
+[node name="CryingElgato" type="Sprite2D" parent="QuitMsgPanel"]
+position = Vector2(305, 218)
+scale = Vector2(0.52, 0.52)
+texture = ExtResource("6_13sgg")
+
+[node name="Elgato" type="Sprite2D" parent="QuitMsgPanel"]
+visible = false
+position = Vector2(303.875, 210)
+scale = Vector2(0.4555, 0.471)
+texture = ExtResource("7_i6lef")
+
+[node name="yes" type="Button" parent="QuitMsgPanel"]
+layout_mode = 0
+offset_left = 398.0
+offset_top = 230.0
+offset_right = 567.0
+offset_bottom = 299.0
+theme = ExtResource("1_yqeox")
+text = "Да"
+
+[node name="No" type="Button" parent="QuitMsgPanel"]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 230.0
+offset_right = 221.0
+offset_bottom = 299.0
+theme = ExtResource("1_yqeox")
+text = "нет"
+
+[node name="Label" type="Label" parent="QuitMsgPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -270.0
+offset_top = 29.0
+offset_right = 270.0
+offset_bottom = 83.0
+grow_horizontal = 2
+text = "Вы точно хотите выйти?"
+label_settings = SubResource("LabelSettings_i42df")
+horizontal_alignment = 1
+
+[node name="MainPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -352.0
+offset_top = -427.0
+offset_right = 352.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_yqeox")
+
+[node name="Play_btn" type="Button" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -315.0
+offset_top = 27.0
+offset_right = 315.0
+offset_bottom = 103.0
+grow_horizontal = 2
+text = "Играть"
+
+[node name="Settings_btn" type="Button" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -315.0
+offset_top = 115.0
+offset_right = 315.0
+offset_bottom = 191.0
+grow_horizontal = 2
+text = "Настройки"
+
+[node name="Stats_btn" type="Button" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -315.0
+offset_top = 203.0
+offset_right = 315.0
+offset_bottom = 279.0
+grow_horizontal = 2
+text = "Статистика и достижения"
+
+[node name="quit_btn" type="Button" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -315.0
+offset_top = 291.0
+offset_right = 315.0
+offset_bottom = 367.0
+grow_horizontal = 2
+text = "Выйти из игры"
+
+[node name="press" type="AudioStreamPlayer" parent="MainPanel"]
+stream = ExtResource("3_mhnvy")
+
+[node name="SettingsPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -411.0
+offset_top = -823.0
+offset_right = 411.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_yqeox")
+script = ExtResource("6_g3eks")
+
+[node name="press" type="AudioStreamPlayer" parent="SettingsPanel"]
+stream = ExtResource("3_mhnvy")
+
+[node name="TabContainer" type="TabContainer" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -387.0
+offset_top = -340.0
+offset_right = 388.0
+offset_bottom = 369.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SettingsPanel/TabContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+metadata/_tab_index = 0
+
+[node name="Игра" type="Panel" parent="SettingsPanel/TabContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_4ytvr")
+script = ExtResource("13_7jp70")
+
+[node name="V-Sync" type="CheckBox" parent="SettingsPanel/TabContainer/ScrollContainer/Игра"]
+layout_mode = 0
+offset_left = 696.0
+offset_top = 16.0
+offset_right = 746.0
+offset_bottom = 80.0
+button_pressed = true
+flat = true
+
+[node name="Label" type="Label" parent="SettingsPanel/TabContainer/ScrollContainer/Игра/V-Sync"]
+layout_mode = 0
+offset_left = -661.0
+offset_top = 8.0
+offset_right = -378.0
+offset_bottom = 55.0
+text = "Vertical sync"
+label_settings = SubResource("LabelSettings_7jp70")
+
+[node name="Window" type="CheckBox" parent="SettingsPanel/TabContainer/ScrollContainer/Игра"]
+layout_mode = 0
+offset_left = 696.0
+offset_top = 88.0
+offset_right = 746.0
+offset_bottom = 152.0
+button_pressed = true
+flat = true
+
+[node name="Label" type="Label" parent="SettingsPanel/TabContainer/ScrollContainer/Игра/Window"]
+layout_mode = 0
+offset_left = -662.586
+offset_top = 11.0
+offset_right = -379.586
+offset_bottom = 58.0
+text = "fullscreen"
+label_settings = SubResource("LabelSettings_7jp70")
+
+[node name="Language" type="OptionButton" parent="SettingsPanel/TabContainer/ScrollContainer/Игра"]
+layout_mode = 0
+offset_left = 535.0
+offset_top = 176.0
+offset_right = 744.0
+offset_bottom = 231.0
+theme = ExtResource("1_yqeox")
+selected = 0
+item_count = 2
+popup/item_0/text = "Russian"
+popup/item_0/id = 0
+popup/item_1/text = "English"
+popup/item_1/id = 1
+
+[node name="Label" type="Label" parent="SettingsPanel/TabContainer/ScrollContainer/Игра/Language"]
+layout_mode = 0
+offset_left = -501.0
+offset_top = 6.0
+offset_right = -218.0
+offset_bottom = 53.0
+text = "Language"
+label_settings = SubResource("LabelSettings_7jp70")
+
+[node name="Mouse_Sensitivity" type="HSlider" parent="SettingsPanel/TabContainer/ScrollContainer/Игра"]
+layout_mode = 0
+offset_left = 471.0
+offset_top = 278.0
+offset_right = 680.0
+offset_bottom = 294.0
+min_value = 10.0
+value = 50.0
+
+[node name="Label" type="Label" parent="SettingsPanel/TabContainer/ScrollContainer/Игра/Mouse_Sensitivity"]
+layout_mode = 0
+offset_left = -436.0
+offset_top = -15.0
+offset_right = -71.0
+offset_bottom = 32.0
+text = "Mouse sensitivity"
+label_settings = SubResource("LabelSettings_7jp70")
+
+[node name="Label2" type="Label" parent="SettingsPanel/TabContainer/ScrollContainer/Игра/Mouse_Sensitivity"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = -11.0
+offset_right = 280.0
+offset_bottom = 41.0
+text = "50 "
+label_settings = SubResource("LabelSettings_mxgkd")
+
+[node name="FOV" type="HSlider" parent="SettingsPanel/TabContainer/ScrollContainer/Игра"]
+layout_mode = 0
+offset_left = 471.0
+offset_top = 512.0
+offset_right = 680.0
+offset_bottom = 528.0
+value = 60.0
+
+[node name="Label" type="Label" parent="SettingsPanel/TabContainer/ScrollContainer/Игра/FOV"]
+layout_mode = 0
+offset_left = -436.0
+offset_top = -15.0
+offset_right = -71.0
+offset_bottom = 32.0
+text = "FOV"
+label_settings = SubResource("LabelSettings_7jp70")
+
+[node name="Label2" type="Label" parent="SettingsPanel/TabContainer/ScrollContainer/Игра/FOV"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = -11.0
+offset_right = 280.0
+offset_bottom = 41.0
+text = "60"
+label_settings = SubResource("LabelSettings_mxgkd")
+
+[node name="Brightness" type="HSlider" parent="SettingsPanel/TabContainer/ScrollContainer/Игра"]
+layout_mode = 0
+offset_left = 471.0
+offset_top = 584.0
+offset_right = 680.0
+offset_bottom = 600.0
+min_value = 35.0
+value = 50.0
+
+[node name="Label" type="Label" parent="SettingsPanel/TabContainer/ScrollContainer/Игра/Brightness"]
+layout_mode = 0
+offset_left = -436.0
+offset_top = -15.0
+offset_right = -71.0
+offset_bottom = 32.0
+text = "brightness"
+label_settings = SubResource("LabelSettings_7jp70")
+
+[node name="Label2" type="Label" parent="SettingsPanel/TabContainer/ScrollContainer/Игра/Brightness"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = -11.0
+offset_right = 280.0
+offset_bottom = 41.0
+text = "50"
+label_settings = SubResource("LabelSettings_mxgkd")
+
+[node name="Shadows3" type="CheckBox" parent="SettingsPanel/TabContainer/ScrollContainer/Игра"]
+layout_mode = 0
+offset_left = 683.0
+offset_top = 329.0
+offset_right = 733.0
+offset_bottom = 393.0
+button_pressed = true
+flat = true
+
+[node name="Label" type="Label" parent="SettingsPanel/TabContainer/ScrollContainer/Игра/Shadows3"]
+layout_mode = 0
+offset_left = -648.0
+offset_top = 9.0
+offset_right = -365.0
+offset_bottom = 56.0
+text = "Shadows"
+label_settings = SubResource("LabelSettings_7jp70")
+
+[node name="FPS-Visibility" type="CheckBox" parent="SettingsPanel/TabContainer/ScrollContainer/Игра"]
+layout_mode = 0
+offset_left = 683.0
+offset_top = 409.0
+offset_right = 733.0
+offset_bottom = 473.0
+flat = true
+
+[node name="Label" type="Label" parent="SettingsPanel/TabContainer/ScrollContainer/Игра/FPS-Visibility"]
+layout_mode = 0
+offset_left = -648.0
+offset_top = 9.0
+offset_right = -365.0
+offset_bottom = 56.0
+text = "Fps Visibility"
+label_settings = SubResource("LabelSettings_7jp70")
+
+[node name="Управление" type="Panel" parent="SettingsPanel/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g3eks")
+metadata/_tab_index = 1
+
+[node name="Button" type="Button" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 640.0
+offset_top = 33.0
+offset_right = 796.0
+offset_bottom = 75.0
+theme = ExtResource("1_yqeox")
+theme_override_font_sizes/font_size = 31
+text = "назад"
+
+[connection signal="mouse_entered" from="QuitMsgPanel/yes" to="QuitMsgPanel" method="_on_yes_mouse_entered"]
+[connection signal="pressed" from="QuitMsgPanel/yes" to="QuitMsgPanel" method="_on_yes_pressed"]
+[connection signal="mouse_entered" from="QuitMsgPanel/No" to="QuitMsgPanel" method="_on_no_mouse_entered"]
+[connection signal="pressed" from="QuitMsgPanel/No" to="QuitMsgPanel" method="_on_no_pressed"]
+[connection signal="mouse_entered" from="MainPanel/Play_btn" to="." method="_on_play_btn_mouse_entered"]
+[connection signal="pressed" from="MainPanel/Play_btn" to="." method="_on_play_btn_pressed"]
+[connection signal="mouse_entered" from="MainPanel/Settings_btn" to="." method="_on_settings_btn_mouse_entered"]
+[connection signal="pressed" from="MainPanel/Settings_btn" to="." method="_on_settings_btn_pressed"]
+[connection signal="mouse_entered" from="MainPanel/Stats_btn" to="." method="_on_stats_btn_mouse_entered"]
+[connection signal="pressed" from="MainPanel/Stats_btn" to="." method="_on_stats_btn_pressed"]
+[connection signal="mouse_entered" from="MainPanel/quit_btn" to="." method="_on_quit_btn_mouse_entered"]
+[connection signal="pressed" from="MainPanel/quit_btn" to="." method="_on_quit_btn_pressed"]
+[connection signal="tab_changed" from="SettingsPanel/TabContainer" to="SettingsPanel" method="_on_tab_container_tab_changed"]
+[connection signal="tab_hovered" from="SettingsPanel/TabContainer" to="SettingsPanel" method="_on_tab_container_tab_hovered"]
+[connection signal="tab_selected" from="SettingsPanel/TabContainer" to="SettingsPanel" method="_on_tab_container_tab_selected"]
+[connection signal="toggled" from="SettingsPanel/TabContainer/ScrollContainer/Игра/V-Sync" to="SettingsPanel/TabContainer/ScrollContainer/Игра" method="_on_v_sync_toggled"]
+[connection signal="toggled" from="SettingsPanel/TabContainer/ScrollContainer/Игра/Window" to="SettingsPanel/TabContainer/ScrollContainer/Игра" method="_on_window_toggled"]
+[connection signal="item_selected" from="SettingsPanel/TabContainer/ScrollContainer/Игра/Language" to="SettingsPanel/TabContainer/ScrollContainer/Игра" method="_on_language_item_selected"]
+[connection signal="value_changed" from="SettingsPanel/TabContainer/ScrollContainer/Игра/Mouse_Sensitivity" to="SettingsPanel/TabContainer/ScrollContainer/Игра" method="_on_mouse_sensitivity_value_changed"]
+[connection signal="value_changed" from="SettingsPanel/TabContainer/ScrollContainer/Игра/FOV" to="SettingsPanel/TabContainer/ScrollContainer/Игра" method="_on_fov_value_changed"]
+[connection signal="value_changed" from="SettingsPanel/TabContainer/ScrollContainer/Игра/Brightness" to="SettingsPanel/TabContainer/ScrollContainer/Игра" method="_on_brightness_value_changed"]
+[connection signal="toggled" from="SettingsPanel/TabContainer/ScrollContainer/Игра/Shadows3" to="SettingsPanel/TabContainer/ScrollContainer/Игра" method="_on_shadows_3_toggled"]
+[connection signal="toggled" from="SettingsPanel/TabContainer/ScrollContainer/Игра/FPS-Visibility" to="SettingsPanel/TabContainer/ScrollContainer/Игра" method="_on_fps_visibility_toggled"]
+[connection signal="mouse_entered" from="SettingsPanel/Button" to="SettingsPanel" method="_on_button_mouse_entered"]
+[connection signal="pressed" from="SettingsPanel/Button" to="SettingsPanel" method="_on_button_pressed"]

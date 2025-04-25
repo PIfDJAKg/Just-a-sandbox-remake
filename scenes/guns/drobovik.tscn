@@ -1,0 +1,126 @@
+[gd_scene load_steps=16 format=3 uid="uid://dmd30i0n880jl"]
+
+[ext_resource type="ArrayMesh" uid="uid://5tmvaljxs5jy" path="res://models/Drobovik_Cube_002.res" id="1_07y72"]
+[ext_resource type="AudioStream" uid="uid://bd7jkwv5u0l16" path="res://sounds/pump-action shotgun/shoot/shoot-01.mp3" id="2_joj1e"]
+[ext_resource type="AudioStream" uid="uid://cne38dsogvsm2" path="res://sounds/pump-action shotgun/shoot/shoot-02.mp3" id="3_f1jbs"]
+[ext_resource type="AudioStream" uid="uid://ce78di22tmlhu" path="res://sounds/pump-action shotgun/shoot/shoot-03.mp3" id="4_8acbs"]
+[ext_resource type="AudioStream" uid="uid://cdodlhtq28k03" path="res://sounds/pump-action shotgun/shoot/shoot-04.mp3" id="5_lgbks"]
+[ext_resource type="AudioStream" uid="uid://ujwjwjcnck3p" path="res://sounds/pump-action shotgun/refresh/-01.mp3" id="6_i16bl"]
+[ext_resource type="AudioStream" uid="uid://kr0xxghs124p" path="res://sounds/pump-action shotgun/refresh/-02.mp3" id="7_pqcf2"]
+[ext_resource type="AudioStream" uid="uid://dsc5vc3c6c6ee" path="res://sounds/pump-action shotgun/refresh/-03.mp3" id="8_xbttp"]
+[ext_resource type="AudioStream" uid="uid://b5di0cory6sqd" path="res://sounds/pump-action shotgun/refresh/-04.mp3" id="9_0a5us"]
+
+[sub_resource type="GDScript" id="GDScript_07y72"]
+script/source = "extends MeshInstance3D
+
+var is_shoot = false
+@export var damage := 15
+var Bullet_Holle = preload(\"res://scenes/other/shoot_holl.tscn\")
+var ghils = preload(\"res://scenes/objects/gilza_red.tscn\")
+
+func _process(delta: float) -> void:
+	if Input.is_action_pressed(\"LMB\") and visible == true and not is_shoot and !GScript.UI_opened:
+		is_shoot = true
+		$shoot.play()
+		shoot()
+		await get_tree().create_timer(0.35).timeout
+		$refresh.play()
+		await get_tree().create_timer(0.35).timeout
+		is_shoot = false
+
+func shoot():
+	$GPUParticles3D.emitting = true
+	ghils_spawn()
+	if $RayCast3D.is_colliding():
+		
+		var collide_point = $RayCast3D.get_collision_point()
+		var normal = $RayCast3D.get_collision_normal()
+		var target = $RayCast3D.get_collider()
+		
+		if target != null:
+			if target.has_method(\"shoot_hit\"):
+				target.shoot_hit(damage)
+		
+		if !target.has_method(\"shoot_hit\"):
+			GScript.particles += 1
+			var Holl = Bullet_Holle.instantiate()
+			get_tree().current_scene.add_child(Holl)
+			
+			Holl.global_position = collide_point
+			Holl.look_at(collide_point + normal, Vector3.UP)
+			Holl.look_at(collide_point + normal, Vector3.RIGHT)
+
+func  ghils_spawn():
+	var ghilsa = ghils.instantiate()
+	get_tree().current_scene.add_child(ghilsa)
+	ghilsa.global_position = $Gilse_node.global_position
+	ghilsa.global_rotation = $Gilse_node.rotation + Vector3(0, 18, 179.9)
+	
+"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ajpy7"]
+streams_count = 4
+stream_0/stream = ExtResource("2_joj1e")
+stream_1/stream = ExtResource("3_f1jbs")
+stream_2/stream = ExtResource("4_8acbs")
+stream_3/stream = ExtResource("5_lgbks")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6mt3p"]
+streams_count = 4
+stream_0/stream = ExtResource("6_i16bl")
+stream_1/stream = ExtResource("7_pqcf2")
+stream_2/stream = ExtResource("8_xbttp")
+stream_3/stream = ExtResource("9_0a5us")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_07y72"]
+direction = Vector3(0, 0, 2)
+spread = 8.674
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, -1, 0)
+scale_min = 0.03
+scale_max = 0.04
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_07y72"]
+albedo_color = Color(1, 0.792548, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_joj1e"]
+material = SubResource("StandardMaterial3D_07y72")
+
+[node name="Drobovik" type="MeshInstance3D"]
+transform = Transform3D(9.22717e-05, -0.0999978, 0.000665243, -0.0272199, -0.00066524, -0.0962218, 0.0962241, -9.22931e-05, -0.0272199, 0, 0, 0)
+layers = 1023
+mesh = ExtResource("1_07y72")
+script = SubResource("GDScript_07y72")
+
+[node name="shoot" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(9.99998, 0.0109604, 0.0192711, -0.0110362, 9.99992, 0.0393841, -0.0192273, -0.0394052, 9.9999, -1.45356, 5.35079, -5.15656)
+stream = SubResource("AudioStreamRandomizer_ajpy7")
+attenuation_model = 3
+volume_db = 12.19
+pitch_scale = 0.92
+attenuation_filter_cutoff_hz = 5320.0
+
+[node name="refresh" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(10, 1.86265e-08, 1.66893e-06, -1.86265e-09, 10, -5.12227e-09, -1.19209e-06, -1.16415e-08, 10, -1.45356, 5.35079, -5.15656)
+stream = SubResource("AudioStreamRandomizer_6mt3p")
+attenuation_model = 3
+volume_db = -4.571
+unit_size = 39.49
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(0.000501344, 0.962691, 0.270602, -1, 0.000496293, 8.70916e-05, -5.04546e-05, -0.270602, 0.962692, 2.94516, 4.61653, -4.75716)
+target_position = Vector3(0, -150, 0)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.252594, -0.00712634, -0.967547, 0.00574708, 0.999967, -0.00586476, 0.967556, -0.00407917, 0.252626, -12.1475, 0.296239, 1.45978)
+emitting = false
+amount = 15
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_07y72")
+draw_pass_1 = SubResource("SphereMesh_joj1e")
+
+[node name="Gilse_node" type="Node3D" parent="."]
+transform = Transform3D(1, 4.07454e-10, 5.96046e-08, -5.82077e-11, 1, -7.27596e-10, -5.96046e-08, 1.92085e-09, 1, -4.37109, 0.324746, 0.248251)

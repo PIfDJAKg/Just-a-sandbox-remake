@@ -1,0 +1,24 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://crc7pm25k8ch4"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lsfrm"]
+load_path = "res://.godot/imported/Grass005_1K-JPG_Color.jpg-3deaf6b329181d386c4511e6e4f2abe6.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7j3mk"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dhl3a"]
+load_path = "res://.godot/imported/Grass005_1K-JPG_NormalGL.jpg-33f5c5605a5038bce1379d2433864663.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_x767v"]
+load_path = "res://.godot/imported/Grass005_1K-JPG_Roughness.jpg-547786d60b4dec0fa6c2128fd5555c41.s3tc.ctex"
+
+[resource]
+albedo_color = Color(0.415796, 0.699707, 0.281751, 1)
+albedo_texture = SubResource("CompressedTexture2D_lsfrm")
+metallic_specular = 0.23
+roughness_texture = SubResource("CompressedTexture2D_x767v")
+normal_enabled = true
+normal_texture = SubResource("CompressedTexture2D_dhl3a")
+ao_texture = SubResource("CompressedTexture2D_7j3mk")
+uv1_scale = Vector3(0.4, 0.4, 0.4)
+uv1_triplanar = true
+uv1_world_triplanar = true

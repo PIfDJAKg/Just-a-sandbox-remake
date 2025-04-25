@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://d1hgkhc7qvf6o"]
+
+[ext_resource type="Texture2D" uid="uid://ce338ukakeyaj" path="res://textures/rock/Rock051_1K-JPG_NormalGL.jpg" id="1_p1hii"]
+[ext_resource type="Texture2D" uid="uid://bt3bhl5if85p6" path="res://textures/rock/Rock051_1K-JPG_Color.jpg" id="1_s28a7"]
+[ext_resource type="Texture2D" uid="uid://s88ne5pi8pvf" path="res://textures/rock/Rock051_1K-JPG_Roughness.jpg" id="2_s28a7"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_s28a7"]
+
+[resource]
+albedo_texture = ExtResource("1_s28a7")
+metallic_specular = 0.0
+roughness_texture = ExtResource("2_s28a7")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = ExtResource("1_p1hii")
+ao_texture = SubResource("CompressedTexture2D_s28a7")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+uv1_world_triplanar = true
