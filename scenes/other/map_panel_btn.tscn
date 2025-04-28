@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://60nwi3rdbcjv"]
+
+[ext_resource type="Texture2D" uid="uid://cxso3tayxhsta" path="res://textures/ELGATO/crying_Elgato.png" id="1_hjq5t"]
+[ext_resource type="FontFile" uid="uid://crqhx2kkmwe22" path="res://other/fonts/ofont.ru_Downtown.ttf" id="2_iuadl"]
+[ext_resource type="Theme" uid="uid://dke7f2bsi2nfp" path="res://other/themes/theme.tres" id="3_a0p1o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apxqi"]
+bg_color = Color(0.1, 0.1, 0.1, 0.666667)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_a0p1o"]
+font = ExtResource("2_iuadl")
+font_size = 41
+
+[node name="MapPanel_BTN" type="Panel"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -565.0
+offset_top = 17.0
+offset_right = 565.0
+offset_bottom = 159.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_apxqi")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 13.0
+offset_right = 134.0
+offset_bottom = 131.0
+texture = ExtResource("1_hjq5t")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 149.0
+offset_top = 44.0
+offset_right = 488.0
+offset_bottom = 94.0
+text = "Название карты"
+label_settings = SubResource("LabelSettings_a0p1o")
+vertical_alignment = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -217.0
+offset_top = -42.0
+offset_right = -32.0
+offset_bottom = 42.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("3_a0p1o")
+text = "Играть"

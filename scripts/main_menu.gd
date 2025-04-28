@@ -16,7 +16,7 @@ func _on_settings_btn_pressed() -> void:
 func _on_play_btn_pressed() -> void:
 	$MainPanel/press.play()
 	await get_tree().create_timer(0.2).timeout
-	get_tree().change_scene_to_file("res://scenes/test_scene.tscn")
+	get_tree().change_scene_to_file("res://scenes/mapSelect.tscn")
 
 func _ready() -> void:
 	var Fullscreen = SaveConfigScript.load_game_setings()["Fullscreen"]

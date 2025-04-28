@@ -1,14 +1,19 @@
 [gd_scene load_steps=19 format=3 uid="uid://c1pwto1a1aqqs"]
 
-[ext_resource type="Material" uid="uid://crc7pm25k8ch4" path="res://materials/grass_material.tres" id="1_g7g4h"]
-[ext_resource type="Script" uid="uid://yl454m3rie28" path="res://scenes/directional_light.gd" id="1_rnaij"]
-[ext_resource type="PackedScene" uid="uid://ctco84i7vf467" path="res://scenes/player.tscn" id="2_j8ivh"]
-[ext_resource type="Material" uid="uid://vdsqb5405g1l" path="res://materials/sand.tres" id="3_qjeyg"]
-[ext_resource type="Material" uid="uid://dnc442wl88x0" path="res://materials/bricks_material.tres" id="4_3qnke"]
-[ext_resource type="Material" uid="uid://d1hgkhc7qvf6o" path="res://materials/rock.tres" id="5_wtsjf"]
-[ext_resource type="PackedScene" uid="uid://cgvhmi2c41cgn" path="res://scenes/objects/cube.tscn" id="6_3qnke"]
-[ext_resource type="PackedScene" uid="uid://vhep5rw2yoaa" path="res://scenes/other/shoot_holl.tscn" id="7_h3xc6"]
-[ext_resource type="FontFile" uid="uid://bcq3bv6in24ds" path="res://other/fonts/adrip1.ttf" id="7_wtsjf"]
+[ext_resource type="Script" uid="uid://yl454m3rie28" path="res://scenes/directional_light.gd" id="1_k8838"]
+[ext_resource type="Material" uid="uid://crc7pm25k8ch4" path="res://materials/grass_material.tres" id="2_o56db"]
+[ext_resource type="Material" uid="uid://vdsqb5405g1l" path="res://materials/sand.tres" id="3_uk285"]
+[ext_resource type="Material" uid="uid://dnc442wl88x0" path="res://materials/bricks_material.tres" id="4_kowjm"]
+[ext_resource type="Material" uid="uid://d1hgkhc7qvf6o" path="res://materials/rock.tres" id="5_xnsqx"]
+[ext_resource type="PackedScene" uid="uid://vhep5rw2yoaa" path="res://scenes/other/shoot_holl.tscn" id="6_meu82"]
+[ext_resource type="PackedScene" uid="uid://cgvhmi2c41cgn" path="res://scenes/objects/cube.tscn" id="7_7eyu1"]
+[ext_resource type="FontFile" uid="uid://bcq3bv6in24ds" path="res://other/fonts/adrip1.ttf" id="8_0iq6n"]
+
+[sub_resource type="GDScript" id="GDScript_eb8ss"]
+script/source = "extends Node3D
+
+var player_spawn_position = Vector3(-4.704, 0.887, 1.367)
+"
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_j8ivh"]
 sky_top_color = Color(0.25822, 0.419934, 0.82043, 1)
@@ -44,6 +49,7 @@ size = Vector3(1.0249, 1.07208, 1.00989)
 size = Vector3(1, 1, 4.80249)
 
 [node name="test_scene" type="Node3D"]
+script = SubResource("GDScript_eb8ss")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7ddre")
@@ -53,12 +59,12 @@ transform = Transform3D(0.561459, -0.632721, 0.533318, -0.169109, 0.543157, 0.82
 light_energy = 1.646
 light_specular = 0.1
 shadow_enabled = true
-script = ExtResource("1_rnaij")
+script = ExtResource("1_k8838")
 
 [node name="ground" type="MeshInstance3D" parent="."]
 transform = Transform3D(10.4358, 0, 0, 0, 1, 0, 0, 0, 10.4358, 0, 0, 0)
 mesh = SubResource("PlaneMesh_qjeyg")
-surface_material_override/0 = ExtResource("1_g7g4h")
+surface_material_override/0 = ExtResource("2_o56db")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ground"]
 collision_layer = 7
@@ -69,7 +75,7 @@ shape = SubResource("BoxShape3D_j8ivh")
 
 [node name="ground2" type="MeshInstance3D" parent="."]
 transform = Transform3D(5.49636, 0, 0, 0, 1, 0, 0, 0, 8.55492, 21.302, 0, 9.42)
-material_override = ExtResource("1_g7g4h")
+material_override = ExtResource("2_o56db")
 mesh = SubResource("PlaneMesh_qjeyg")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ground2"]
@@ -81,7 +87,7 @@ shape = SubResource("BoxShape3D_j8ivh")
 
 [node name="ground3" type="MeshInstance3D" parent="."]
 transform = Transform3D(2.68293, 0, 0, 0, 1, 0, 0, 0, 4.43996, 13.1272, 0, 12.0217)
-material_override = ExtResource("1_g7g4h")
+material_override = ExtResource("2_o56db")
 mesh = SubResource("PlaneMesh_qjeyg")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ground3"]
@@ -91,12 +97,9 @@ collision_mask = 7
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ground3/StaticBody3D"]
 shape = SubResource("BoxShape3D_j8ivh")
 
-[node name="player" parent="." instance=ExtResource("2_j8ivh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.70413, 0.886596, 1.36665)
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0339622, 0.514455, -3.16354)
-material_override = ExtResource("3_qjeyg")
+material_override = ExtResource("3_uk285")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
@@ -106,7 +109,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0339622, 0.514455, -2.16337)
-material_override = ExtResource("4_3qnke")
+material_override = ExtResource("4_kowjm")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
@@ -116,7 +119,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0339622, 0.514455, -1.16339)
-material_override = ExtResource("1_g7g4h")
+material_override = ExtResource("2_o56db")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D3"]
@@ -126,7 +129,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0339622, 0.514455, -0.163747)
-material_override = ExtResource("5_wtsjf")
+material_override = ExtResource("5_xnsqx")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D4"]
@@ -144,12 +147,12 @@ surface_material_override/0 = SubResource("ShaderMaterial_rnaij")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D14/StaticBody3D"]
 shape = SubResource("BoxShape3D_h3xc6")
 
-[node name="ShootHoll" parent="MeshInstance3D14" instance=ExtResource("7_h3xc6")]
+[node name="ShootHoll" parent="MeshInstance3D14" instance=ExtResource("6_meu82")]
 transform = Transform3D(-0.0870768, 0, -4.98322e-05, 0, 0.1, 0, 0.0491694, 0, -8.82506e-05, 0.034904, -0.114881, -0.501089)
 
 [node name="MeshInstance3D15" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.0339622, 1.5109, -1.16365)
-material_override = ExtResource("4_3qnke")
+material_override = ExtResource("4_kowjm")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D15"]
@@ -159,7 +162,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D16" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.0339622, 1.5109, -2.16364)
-material_override = ExtResource("1_g7g4h")
+material_override = ExtResource("2_o56db")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D16"]
@@ -169,7 +172,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D17" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.0339621, 1.5109, -3.16328)
-material_override = ExtResource("5_wtsjf")
+material_override = ExtResource("5_xnsqx")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D17"]
@@ -179,7 +182,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.59534, 0, 1.04088, 0, 0.0897602, 0, -1.34569, 0, 1.23398, 3.88075, 0.119838, -4.97162)
-material_override = ExtResource("3_qjeyg")
+material_override = ExtResource("3_uk285")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D5"]
@@ -189,7 +192,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
 transform = Transform3D(3.30552, 0, 0, 0, 0.0897602, 0, 0, 0, 6.15235, 3.88075, 0.0301287, -3.53599)
-material_override = ExtResource("4_3qnke")
+material_override = ExtResource("4_kowjm")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D6"]
@@ -199,7 +202,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D9" type="MeshInstance3D" parent="."]
 transform = Transform3D(-16.481, 0, 0, 0, -3.9547e-09, 12.2718, 0, 0.0904731, 5.36418e-07, 18.6697, 1.41171, 7.55548)
-material_override = ExtResource("4_3qnke")
+material_override = ExtResource("4_kowjm")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D9"]
@@ -210,7 +213,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D26" type="MeshInstance3D" parent="."]
 transform = Transform3D(4.56695e-07, -0.0904731, -5.36418e-07, 0, -3.9547e-09, 12.2718, -10.448, -3.9547e-09, 2.01506e-14, 10.4734, 1.41171, 12.8146)
-material_override = ExtResource("4_3qnke")
+material_override = ExtResource("4_kowjm")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D26"]
@@ -221,7 +224,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D10" type="MeshInstance3D" parent="."]
 transform = Transform3D(-8.99413, 0, 0, 0, -3.92354e-09, 8.19321, 0, 0.0897602, 3.58137e-07, 13.0325, 0.0262059, 3.49183)
-material_override = ExtResource("4_3qnke")
+material_override = ExtResource("4_kowjm")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D10"]
@@ -232,7 +235,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D11" type="MeshInstance3D" parent="."]
 transform = Transform3D(2.01524e-07, 0.0904731, 1.92751e-07, 0, -3.9547e-09, 4.40962, 4.61033, -3.95471e-09, -2.40915e-14, 15.8508, -2.20698, 5.47656)
-material_override = ExtResource("4_3qnke")
+material_override = ExtResource("4_kowjm")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D11"]
@@ -243,7 +246,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D12" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.99936e-07, 0.0897602, 1.91232e-07, 0, -3.92354e-09, 4.37487, 4.574, -3.92354e-09, 7.18365e-15, 10.394, -2.18849, 5.4727)
-material_override = ExtResource("4_3qnke")
+material_override = ExtResource("4_kowjm")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D12"]
@@ -254,7 +257,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D13" type="MeshInstance3D" parent="."]
 transform = Transform3D(-8.73949e-15, -3.9968e-15, -6.23254, 1.99936e-07, 0.0897602, 3.03677e-13, 4.574, -3.92354e-09, 1.0234e-14, 13.3211, -4.00445, 5.4727)
-material_override = ExtResource("3_qjeyg")
+material_override = ExtResource("3_uk285")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D13"]
@@ -265,7 +268,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0287762, 0, -1.6142, 0, 0.0897602, 0, 2.0869, 0, 0.022258, 3.19636, 0.119032, -2.52089)
-material_override = ExtResource("1_g7g4h")
+material_override = ExtResource("2_o56db")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D7"]
@@ -275,7 +278,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D18" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0287762, 0, -1.6142, 0, 0.0897602, 0, 2.0869, 0, 0.022258, 23.9435, 0.119032, -1.09737)
-material_override = ExtResource("1_g7g4h")
+material_override = ExtResource("2_o56db")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D18"]
@@ -285,7 +288,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D19" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0287762, 0, -1.6142, 0, 0.0897602, 0, 2.0869, 0, 0.022258, 23.9435, 0.832972, -4.41193)
-material_override = ExtResource("1_g7g4h")
+material_override = ExtResource("2_o56db")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D19"]
@@ -295,7 +298,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D25" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0287762, 0, -1.6142, 0, 0.0897602, 0, 2.0869, 0, 0.022258, 20.8628, 0.64406, 11.1921)
-material_override = ExtResource("1_g7g4h")
+material_override = ExtResource("2_o56db")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D25"]
@@ -305,7 +308,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D20" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0287762, -6.87177e-11, -1.6142, -1.25494, 0.0717177, -0.0133846, 1.66742, 0.0539765, 0.017784, 23.9435, 1.61248, -8.00766)
-material_override = ExtResource("1_g7g4h")
+material_override = ExtResource("2_o56db")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D20"]
@@ -315,7 +318,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D21" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0287762, -6.87177e-11, -1.6142, 1.15062, 0.0748843, 0.0122721, 1.74104, -0.0494897, 0.0185692, 20.91, 1.61248, -8.00766)
-material_override = ExtResource("1_g7g4h")
+material_override = ExtResource("2_o56db")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D21"]
@@ -325,7 +328,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D22" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0287762, -1.14809e-10, -1.6142, 0.0508054, 0.0897336, 0.00054187, 2.08628, -0.0021852, 0.0222514, 17.1572, 1.61248, -8.00766)
-material_override = ExtResource("1_g7g4h")
+material_override = ExtResource("2_o56db")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D22"]
@@ -335,7 +338,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D28" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0287762, -1.14809e-10, -1.6142, 0.0508054, 0.0897336, 0.00054187, 2.08628, -0.0021852, 0.0222514, 5.33963, 19.5813, -22.4162)
-material_override = ExtResource("1_g7g4h")
+material_override = ExtResource("2_o56db")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D28"]
@@ -345,7 +348,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D23" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0287762, -1.12197e-10, -1.6142, -0.813304, 0.0826632, -0.00867436, 1.9219, 0.0349812, 0.0204981, 17.1572, 2.70282, -4.21321)
-material_override = ExtResource("1_g7g4h")
+material_override = ExtResource("2_o56db")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D23"]
@@ -355,7 +358,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D24" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0287762, -1.38862e-10, -1.6142, 0.608025, 0.085866, 0.00648494, 1.99636, -0.0261519, 0.0212923, 17.1572, 4.01132, -2.49271)
-material_override = ExtResource("1_g7g4h")
+material_override = ExtResource("2_o56db")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D24"]
@@ -365,7 +368,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 
 [node name="MeshInstance3D8" type="MeshInstance3D" parent="."]
 transform = Transform3D(2.0871, 0, 0, 0, -0.12933, -4.10175, 0, -0.120358, 4.40753, 5.43496, 1.87946, -2.50951)
-material_override = ExtResource("4_3qnke")
+material_override = ExtResource("4_kowjm")
 mesh = SubResource("BoxMesh_rnaij")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D8"]
@@ -374,25 +377,25 @@ mesh = SubResource("BoxMesh_rnaij")
 transform = Transform3D(0.999999, 0, 0, 0, 0.999995, -3.43323e-05, 0, -1.49012e-08, 0.999998, 0, 7.10487e-05, -1.90124)
 shape = SubResource("BoxShape3D_s36qc")
 
-[node name="Cube" parent="." instance=ExtResource("6_3qnke")]
+[node name="Cube" parent="." instance=ExtResource("7_7eyu1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.68884, -5.8085)
 
-[node name="Cube2" parent="." instance=ExtResource("6_3qnke")]
+[node name="Cube2" parent="." instance=ExtResource("7_7eyu1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.21926, 0.550488, -1.12145)
 
-[node name="Cube7" parent="." instance=ExtResource("6_3qnke")]
+[node name="Cube7" parent="." instance=ExtResource("7_7eyu1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.21926, 1.59869, -1.12145)
 
-[node name="Cube3" parent="." instance=ExtResource("6_3qnke")]
+[node name="Cube3" parent="." instance=ExtResource("7_7eyu1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.59434, 0.865183, 5.26458)
 
-[node name="Cube4" parent="." instance=ExtResource("6_3qnke")]
+[node name="Cube4" parent="." instance=ExtResource("7_7eyu1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.59434, 2.02611, 5.26458)
 
-[node name="Cube5" parent="." instance=ExtResource("6_3qnke")]
+[node name="Cube5" parent="." instance=ExtResource("7_7eyu1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.59434, 3.20369, 5.26458)
 
-[node name="Cube6" parent="." instance=ExtResource("6_3qnke")]
+[node name="Cube6" parent="." instance=ExtResource("7_7eyu1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.59434, 4.38138, 5.26458)
 
 [node name="Label3D" type="Label3D" parent="."]
@@ -400,7 +403,7 @@ transform = Transform3D(-1.96282, 0.383845, -2.96378e-07, 0.383845, 1.96282, 5.7
 modulate = Color(0.109766, 0.438902, 0.393189, 0.54902)
 outline_modulate = Color(0.513726, 0.129412, 0.419608, 0.537255)
 text = "t.me/pidjak_hub"
-font = ExtResource("7_wtsjf")
+font = ExtResource("8_0iq6n")
 font_size = 117
 outline_size = 20
 
@@ -409,7 +412,7 @@ transform = Transform3D(1.96282, -0.383845, 4.71224e-07, 0.383845, 1.96282, 5.79
 modulate = Color(0.198, 0.66, 0.5984, 0.811765)
 outline_modulate = Color(1, 0, 0.755101, 0.537255)
 text = "JUST A SANDBOX"
-font = ExtResource("7_wtsjf")
+font = ExtResource("8_0iq6n")
 font_size = 117
 outline_size = 20
 
@@ -419,7 +422,7 @@ modulate = Color(0.112503, 0.425325, 0.0560217, 0.713726)
 outline_modulate = Color(0.223529, 0, 0.130255, 0.603922)
 text = "My testers are
 the best guys"
-font = ExtResource("7_wtsjf")
+font = ExtResource("8_0iq6n")
 font_size = 107
 outline_size = 27
 uppercase = true

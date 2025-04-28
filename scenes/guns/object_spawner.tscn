@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cio4vsetj6cfi"]
+
+[ext_resource type="ArrayMesh" uid="uid://cdnssauf6nl1j" path="res://models/obj_spawner_Circle.res" id="1_cq8mf"]
+[ext_resource type="ArrayMesh" uid="uid://coaqrpuf3w8ey" path="res://models/obj_spawner_Cube_002.res" id="2_8xk82"]
+
+[node name="object_spawner" type="Node3D"]
+
+[node name="ObjSpawnerCircle" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.657444, 0, 1.40895)
+mesh = ExtResource("1_cq8mf")
+
+[node name="ObjSpawnerCube002" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.021926, -0.53632, 0.84373, 0.0169708, -0.843612, -0.536686, 0.999616, 0.0260861, -0.00939528, -0.903068, 0.13189, -2.46311)
+mesh = ExtResource("2_8xk82")

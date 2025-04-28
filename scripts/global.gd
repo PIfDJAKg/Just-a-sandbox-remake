@@ -5,6 +5,7 @@ var last_particles = 0
 var UI_opened = false
 var painting_color:Color = Color("#ffffff")
 var Paint_size = 0.6
+var player_dir = preload("res://scenes/player.tscn")
 
 func  _process(delta: float) -> void:
 	if particles > last_particles:

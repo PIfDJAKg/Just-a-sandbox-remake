@@ -1,0 +1,175 @@
+[gd_scene load_steps=8 format=3 uid="uid://bgs1y4i2txlgt"]
+
+[ext_resource type="Texture2D" uid="uid://dhsjk30tna4ir" path="res://textures/fnEp6TKz4o.png" id="1_1ht4g"]
+[ext_resource type="Shader" uid="uid://b5gq7jk8o51lb" path="res://other/blur.gdshader" id="2_hkgmo"]
+[ext_resource type="FontFile" uid="uid://crqhx2kkmwe22" path="res://other/fonts/ofont.ru_Downtown.ttf" id="3_1ht4g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cjshk"]
+shader = ExtResource("2_hkgmo")
+shader_parameter/blur_radius = 16
+shader_parameter/blur_scale = 2.282
+shader_parameter/darkness = 0.707
+shader_parameter/fade_direction = 0
+shader_parameter/fade_cutoff = 1.0
+shader_parameter/fade_intensity = 0.1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lg703"]
+bg_color = Color(0.140201, 0.140201, 0.140201, 0.858824)
+border_width_left = 5
+border_width_right = 5
+border_color = Color(0.391381, 0.391381, 0.391381, 1)
+corner_radius_top_left = 35
+corner_radius_top_right = 35
+corner_radius_bottom_right = 35
+corner_radius_bottom_left = 35
+
+[sub_resource type="GDScript" id="GDScript_1ht4g"]
+script/source = "extends Panel
+
+var map_panel = preload(\"res://scenes/other/map_panel_btn.tscn\")
+var last_position = 0
+var in_game_dir = DirAccess.open(\"res://maps\")
+var out_game_dir = DirAccess.open(\"user://maps\")
+var map_index = 0
+
+func _ready():
+	_searching_maps_in_game()
+	
+func _searching_maps_in_game(): #поиск файлов карт в файлах игры
+	in_game_dir.list_dir_begin() #пролистывание директории
+	var file_name = in_game_dir.get_next() #выбор следующего файла и запись в переменную
+	while file_name != \"\": #начало цикла
+		if in_game_dir.current_is_dir(): #если файл это папка
+			create_panel(file_name, \"res://maps/\")
+		file_name = in_game_dir.get_next() #выбор следующего файла и запись в переменную
+	in_game_dir.list_dir_end() #окончание пролистывания
+	_searching_maps_out_game()
+	
+func _searching_maps_out_game(): #поиск файлов карт в файлах игры
+	if out_game_dir:
+		out_game_dir.list_dir_begin() #пролистывание директории
+		var file_name = out_game_dir.get_next() #выбор следующего файла и запись в переменную
+		while file_name != \"\": #начало цикла
+			if out_game_dir.current_is_dir(): #если файл это папка
+				create_panel(file_name, \"user://maps/\")
+			file_name = out_game_dir.get_next() #выбор следующего файла и запись в переменную
+		out_game_dir.list_dir_end() #окончание пролистывания
+
+func create_panel(map_name, directory): #создание карточки игры
+	var panel = map_panel.instantiate()
+	var label = panel.get_child(1)
+	var button = panel.get_child(2)
+	label.text = map_name
+	button.connect(\"pressed\", Callable(self, \"_button_pressed\").bind(directory + map_name + \"/map.tscn\"))
+	if map_index > 0:
+		panel.position.y += (159 + last_position)
+		if map_index > 1:
+			panel.position.y -= 17
+		last_position = panel.position.y
+		$ScrollContainer/Control.custom_minimum_size = Vector2(0, last_position + 159)
+	$ScrollContainer/Control.add_child(panel)
+	map_index += 1
+
+func _button_pressed(dir):
+	var map_scene = load(dir).instantiate()
+	get_tree().root.add_child(map_scene)
+	
+	var old_scene = get_tree().current_scene
+	get_tree().current_scene = map_scene
+	
+	if old_scene:
+		old_scene.queue_free()
+	
+	var player = load(\"res://scenes/player.tscn\").instantiate()
+	player.global_position = map_scene.player_spawn_position
+	map_scene.add_child(player)
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_hkgmo"]
+font = ExtResource("3_1ht4g")
+font_size = 66
+font_color = Color(0.74, 0.74, 0.74, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_1ht4g")
+expand_mode = 1
+
+[node name="blur" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_cjshk")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -584.0
+offset_top = -480.0
+offset_right = 584.0
+offset_bottom = 481.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lg703")
+script = SubResource("GDScript_1ht4g")
+
+[node name="Panel" type="Panel" parent="Panel"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 87.0
+offset_right = 1163.0
+offset_bottom = 908.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 86.0
+offset_right = -5.0
+offset_bottom = -55.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical_scroll_mode = 2
+
+[node name="Control" type="Control" parent="Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -328.0
+offset_top = 17.0
+offset_right = 328.0
+offset_bottom = 84.0
+grow_horizontal = 2
+text = "Выбор карты"
+label_settings = SubResource("LabelSettings_hkgmo")
+horizontal_alignment = 1
+vertical_alignment = 1
