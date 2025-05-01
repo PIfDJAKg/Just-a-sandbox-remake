@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GScript="*res://scripts/global.gd"
 SaveConfigScript="*res://SaveConfigScript.gd"
+MapsLoader="*res://scripts/maps_loader.gd"
 
 [display]
 
