@@ -5,6 +5,7 @@
 [ext_resource type="ArrayMesh" uid="uid://b4nubgyj6u1x3" path="res://models/vedro.res" id="3_tpc7d"]
 
 [node name="Svabra" type="Node3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.427532, -0.326601, -0.916187)
 script = ExtResource("1_gym4e")
 
 [node name="Svabra" type="MeshInstance3D" parent="."]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bgs1y4i2txlgt"]
+[gd_scene load_steps=8 format=3 uid="uid://bgs1y4i2txlgt"]
 
 [ext_resource type="Texture2D" uid="uid://dhsjk30tna4ir" path="res://textures/fnEp6TKz4o.png" id="1_1ht4g"]
 [ext_resource type="FontFile" uid="uid://crqhx2kkmwe22" path="res://other/fonts/ofont.ru_Downtown.ttf" id="3_1ht4g"]
+[ext_resource type="Theme" uid="uid://dke7f2bsi2nfp" path="res://other/themes/theme.tres" id="3_hkgmo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lg703"]
 bg_color = Color(0.140201, 0.140201, 0.140201, 0.858824)
@@ -23,6 +24,8 @@ var map_index = 0
 
 func _ready():
 	_searching_maps_in_game()
+	for i in range(15):
+		create_panel(\"name\", \"dir\")
 	
 func _searching_maps_in_game(): #поиск файлов карт в файлах игры
 	in_game_dir.list_dir_begin() #пролистывание директории
@@ -57,6 +60,7 @@ func create_panel(map_name, directory): #создание карточки иг�
 
 func _button_pressed(dir):
 	print(dir)
+	
 	var map_scene = load(dir).instantiate()
 	get_tree().root.add_child(map_scene)
 	
@@ -75,6 +79,17 @@ func _button_pressed(dir):
 font = ExtResource("3_1ht4g")
 font_size = 66
 font_color = Color(0.74, 0.74, 0.74, 1)
+
+[sub_resource type="GDScript" id="GDScript_edlq8"]
+script/source = "extends Button
+
+func _on_pressed() -> void:
+	get_tree().change_scene_to_file(\"res://scenes/menu.tscn\")
+
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed(\"ui_cancel\"):
+		get_tree().change_scene_to_file(\"res://scenes/menu.tscn\")
+"
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -149,3 +164,15 @@ text = "Выбор карты"
 label_settings = SubResource("LabelSettings_hkgmo")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 16.0
+offset_right = 258.0
+offset_bottom = 71.0
+theme = ExtResource("3_hkgmo")
+text = "назад"
+script = SubResource("GDScript_edlq8")
+
+[connection signal="pressed" from="Panel/Button" to="Panel/Button" method="_on_pressed"]

@@ -1,17 +1,23 @@
 [gd_scene load_steps=10 format=3 uid="uid://ctco84i7vf467"]
 
-[ext_resource type="PackedScene" uid="uid://dmd30i0n880jl" path="res://scenes/guns/drobovik.tscn" id="1_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://dmd30i0n880jl" path="res://guns/drobovik.tscn" id="1_qhqgy"]
 [ext_resource type="Script" uid="uid://ckdgemvni8h15" path="res://scripts/player.gd" id="1_tuyoq"]
-[ext_resource type="PackedScene" uid="uid://cv7f00gumo58s" path="res://scenes/guns/spray.tscn" id="2_dqkch"]
 [ext_resource type="PackedScene" uid="uid://csssvs7nb38am" path="res://scenes/ui.tscn" id="2_g2els"]
 [ext_resource type="AudioStream" uid="uid://bf6186cxxuqmc" path="res://sounds/nou-nou-nou-mr-fish.mp3" id="3_qhqgy"]
-[ext_resource type="PackedScene" uid="uid://bqun6j64boy61" path="res://scenes/guns/Svabra.tscn" id="3_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://bt02qgdkwfgil" path="res://maps/FIRST MAP/icon.png" id="5_fjrip"]
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_qhqgy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a5w7b"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_u8vuu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_smehm"]
+albedo_texture = ExtResource("5_fjrip")
+metallic = 1.0
+metallic_specular = 0.0
+uv1_scale = Vector3(1.36, 1.36, 1.36)
+uv1_offset = Vector3(-0.19, -0.105, 0)
 
 [node name="player" type="CharacterBody3D"]
 wall_min_slide_angle = 1.11003
@@ -26,31 +32,23 @@ attributes = SubResource("CameraAttributesPractical_qhqgy")
 fov = 60.0
 
 [node name="Fresh_Light" type="SpotLight3D" parent="cam"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0279883, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0279883, -0.510358)
 visible = false
-light_energy = 3.909
-spot_range = 7.52155
-spot_angle = 22.5459
+light_energy = 4.202
+spot_range = 20.0943
+spot_angle = 45.2303
 
 [node name="guns" type="Node3D" parent="cam"]
 
 [node name="Drobovik" parent="cam/guns" instance=ExtResource("1_qhqgy")]
-transform = Transform3D(9.22717e-05, -0.0999978, 0.000665243, -0.0272199, -0.00066524, -0.0962218, 0.0962241, -9.22931e-05, -0.0272199, 0.470098, -0.373263, -0.399693)
-skeleton = NodePath("../..")
-
-[node name="Spray" parent="cam/guns" instance=ExtResource("2_dqkch")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.428473, -0.325949, -0.755738)
-visible = false
-
-[node name="Svabra" parent="cam/guns" instance=ExtResource("3_qlg0r")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.427342, -0.324847, -0.642617)
-visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_a5w7b")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.982684, 0, -0.185289, 0, 1, 0, 0.185289, 0, -0.982684, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_u8vuu")
+surface_material_override/0 = SubResource("StandardMaterial3D_smehm")
 
 [node name="obj_spawner" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.500727, -2.46443)

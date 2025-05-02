@@ -1,9 +1,27 @@
-[gd_scene load_steps=14 format=3 uid="uid://csssvs7nb38am"]
+[gd_scene load_steps=17 format=3 uid="uid://csssvs7nb38am"]
 
 [ext_resource type="Shader" uid="uid://b5gq7jk8o51lb" path="res://other/blur.gdshader" id="1_nt7q6"]
 [ext_resource type="Theme" uid="uid://dke7f2bsi2nfp" path="res://other/themes/theme.tres" id="2_x4jx1"]
 [ext_resource type="FontFile" uid="uid://8gskd081nn61" path="res://other/fonts/SpriteGraffiti-Regular.otf" id="3_yev5y"]
 [ext_resource type="FontFile" uid="uid://crqhx2kkmwe22" path="res://other/fonts/ofont.ru_Downtown.ttf" id="4_gdt2y"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gdt2y"]
+bg_color = Color(0.2, 0.2, 0.2, 0.454902)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wm3ai"]
+bg_color = Color(0.75, 0.101625, 0.0675, 0.780392)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [sub_resource type="LabelSettings" id="LabelSettings_xlq6p"]
 font_size = 30
@@ -37,6 +55,55 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="GDScript" id="GDScript_yev5y"]
 script/source = "extends Control
 
+var buttons_count = 0
+var panels_count = 1
+var buttons_positions = {1:Vector2(30.0, 12.5), 2:Vector2(246.0, 12.5), 3:Vector2(462.0, 12.5)}
+
+@onready var player_guns: Node3D = $\"../../cam/guns\"
+
+@onready var edit_panel: Control = $\"TabContainer/1\"
+
+var guns_searching_dir = DirAccess.open(\"res://guns\")
+var gun_button = preload(\"res://scenes/other/tools_button_example.tscn\")
+
+func _ready() -> void:
+	searching()
+
+func searching():
+	guns_searching_dir.list_dir_begin() #пролистывание директории
+	var file_name = guns_searching_dir.get_next() #выбор следующего файла и запись в переменную
+	while file_name != \"\": #начало цикла
+		if \".tscn\" in file_name:
+			print(file_name)
+			create_button(file_name, file_name.replace(\".tscn\", \".png\"))
+		file_name = guns_searching_dir.get_next() #выбор следующего файла и запись в переменную
+	guns_searching_dir.list_dir_end() #окончание пролистывания
+
+func create_button(file, ico:String):
+	print(ico)
+	buttons_count += 1
+	if buttons_count == 4:
+		buttons_count = 1
+		panels_count += 1
+		var new_panel = Panel.new()
+		new_panel.name = str(panels_count)
+		$TabContainer.add_child(new_panel)
+		edit_panel = $TabContainer.get_child(panels_count - 1)
+	var button = gun_button.instantiate()
+	var icon = button.get_child(0)
+	var ico_image = load(\"res://guns/\" + ico)
+	if ico_image:
+		icon.texture = ico_image
+	button.position = buttons_positions[buttons_count]
+	button.connect(\"pressed\", Callable(self, \"select_gun\").bind(file))
+	edit_panel.add_child(button)
+
+func select_gun(gun_scene):
+	player_guns.get_child(0).queue_free()
+	var scene = load(\"res://guns/\" + gun_scene)
+	var gun = scene.instantiate()
+	player_guns.add_child(gun)
+
 func _process(delta: float) -> void:
 	if visible and Input.MouseMode.MOUSE_MODE_CAPTURED:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -56,23 +123,6 @@ func _process(delta: float) -> void:
 		visible = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		GScript.UI_opened = false
-
-
-func _on_shoot_gun_pressed() -> void:
-	for child in $\"../../cam/guns\".get_children():
-		child.visible = false
-	$\"../../cam/guns/Drobovik\".visible = true
-
-
-func _on_obj_spawner_pressed() -> void:
-	for child in $\"../../cam/guns\".get_children():
-		child.visible = false
-	$\"../../cam/guns/Svabra\".visible = true
-
-func _on_spray_pressed() -> void:
-	for child in $\"../../cam/guns\".get_children():
-		child.visible = false
-	$\"../../cam/guns/Spray\".visible = true
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x4jx1"]
@@ -104,7 +154,7 @@ func _process(delta: float) -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		GScript.UI_opened = false
 		
-	if Input.is_action_just_pressed(\"color_menu\") and !visible and $\"../../cam/guns/Spray\".visible:
+	if Input.is_action_just_pressed(\"color_menu\") and !visible and $\"../../cam/guns/Spray\":
 		visible = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		GScript.UI_opened = true
@@ -130,6 +180,33 @@ font_size = 61
 font = ExtResource("4_gdt2y")
 font_size = 46
 
+[sub_resource type="GDScript" id="GDScript_wm3ai"]
+script/source = "extends Control
+
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed(\"ui_cancel\") and visible:
+		visible = false
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		GScript.UI_opened = false
+	
+	elif Input.is_action_just_pressed(\"ui_cancel\") and !visible and !GScript.UI_opened:
+		visible = true
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		GScript.UI_opened = true
+
+
+func _on_return_pressed() -> void:
+	visible = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	GScript.UI_opened = false
+
+func _on_menu_pressed() -> void:
+	get_tree().change_scene_to_file(\"res://scenes/menu.tscn\")
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()
+"
+
 [node name="UI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -137,6 +214,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Health_bar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 986.0
+offset_right = 424.0
+offset_bottom = 1038.0
+theme_override_styles/background = SubResource("StyleBoxFlat_gdt2y")
+theme_override_styles/fill = SubResource("StyleBoxFlat_wm3ai")
+step = 1.0
+value = 100.0
+show_percentage = false
 
 [node name="FPS_LABEL_COUNTER" type="Label" parent="."]
 layout_mode = 0
@@ -165,7 +254,6 @@ text = "+"
 label_settings = SubResource("LabelSettings_nt7q6")
 
 [node name="Gun_Select" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -203,51 +291,6 @@ current_tab = 0
 [node name="1" type="Control" parent="Gun_Select/TabContainer"]
 layout_mode = 2
 metadata/_tab_index = 0
-
-[node name="ObjSpawner" type="Button" parent="Gun_Select/TabContainer/1"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -206.0
-offset_top = -88.0
-offset_right = -10.0
-offset_bottom = 89.0
-grow_horizontal = 0
-grow_vertical = 2
-text = "Швабра"
-
-[node name="ShootGun" type="Button" parent="Gun_Select/TabContainer/1"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -124.0
-offset_top = -88.0
-offset_right = 124.0
-offset_bottom = 89.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "дробовик"
-
-[node name="Spray" type="Button" parent="Gun_Select/TabContainer/1"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -677.0
-offset_top = -88.0
-offset_right = -481.0
-offset_bottom = 89.0
-grow_horizontal = 0
-grow_vertical = 2
-text = "Краска"
 
 [node name="painting_Menu" type="Control" parent="."]
 visible = false
@@ -333,8 +376,90 @@ offset_bottom = 163.0
 text = "Толщина"
 label_settings = SubResource("LabelSettings_8dubc")
 
-[connection signal="pressed" from="Gun_Select/TabContainer/1/ObjSpawner" to="Gun_Select" method="_on_obj_spawner_pressed"]
-[connection signal="pressed" from="Gun_Select/TabContainer/1/ShootGun" to="Gun_Select" method="_on_shoot_gun_pressed"]
-[connection signal="pressed" from="Gun_Select/TabContainer/1/Spray" to="Gun_Select" method="_on_spray_pressed"]
+[node name="Escape_menu" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_wm3ai")
+
+[node name="blur" type="ColorRect" parent="Escape_menu"]
+material = SubResource("ShaderMaterial_x4jx1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Escape_menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -274.0
+offset_top = -146.0
+offset_right = 274.0
+offset_bottom = 146.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_x4jx1")
+
+[node name="return" type="Button" parent="Escape_menu/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -244.0
+offset_top = -124.0
+offset_right = 244.0
+offset_bottom = -58.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_x4jx1")
+text = "return"
+
+[node name="menu" type="Button" parent="Escape_menu/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -244.0
+offset_top = -33.0
+offset_right = 244.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_x4jx1")
+text = "return to menu"
+
+[node name="quit" type="Button" parent="Escape_menu/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -244.0
+offset_top = 57.0
+offset_right = 244.0
+offset_bottom = 123.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_x4jx1")
+text = "close the game"
+
 [connection signal="value_changed" from="painting_Menu/blur/Panel/HSlider" to="painting_Menu" method="_on_h_slider_value_changed"]
 [connection signal="color_changed" from="painting_Menu/blur/Panel/ColorPicker" to="painting_Menu" method="_on_color_picker_color_changed"]
+[connection signal="pressed" from="Escape_menu/Panel/return" to="Escape_menu" method="_on_return_pressed"]
+[connection signal="pressed" from="Escape_menu/Panel/menu" to="Escape_menu" method="_on_menu_pressed"]
+[connection signal="pressed" from="Escape_menu/Panel/quit" to="Escape_menu" method="_on_quit_pressed"]

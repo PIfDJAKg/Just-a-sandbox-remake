@@ -23,6 +23,7 @@ scale_max = 0.02
 material = SubResource("StandardMaterial3D_5ncba")
 
 [node name="Spray" type="Node3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.422636, -0.34343, -0.68454)
 script = ExtResource("1_p3bhx")
 
 [node name="SprayHands" type="MeshInstance3D" parent="."]

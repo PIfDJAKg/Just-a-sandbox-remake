@@ -8,7 +8,8 @@ extends CharacterBody3D
 
 var jumps = 2
 var jump_on_wall = false
-
+var max_health = 100
+var health = max_health
 var Sprint = false
 
 @onready var camera_pivot := $cam
@@ -16,18 +17,23 @@ var Sprint = false
 
 @onready var fresh_light: SpotLight3D = $cam/Fresh_Light
 
+
+
 func _ready():
 	GScript.VsyncSet()
 	var Settings_values = SaveConfigScript.load_game_setings()
 	$cam/Camera3D.fov = int(Settings_values["Fov"])
 	print(Settings_values)
 	$UI/FPS_LABEL_COUNTER.visible = Settings_values["FPS-Visibility"]
+	$UI/Health_bar.max_value = max_health
 	mouse_sensitivity = float(Settings_values["Mouse Sensitivity"]) / 500
 	$cam/Camera3D.attributes.exposure_multiplier = float(Settings_values["Brightness"]) / 50
 	# Захват мыши
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func  _process(delta: float) -> void:
+	$UI/Health_bar.value = health
+	
 	if global_position.y < -90:
 		global_position = Vector3(0, 30, 0)
 		$Audio/Mr_FishAudio.play()
@@ -71,7 +77,7 @@ func push_away_rigid_bodies(): #взято с ютуба
 
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("ctrl"):
+	if Input.is_action_just_pressed("ctrl") and !GScript.UI_opened:
 		if Sprint:
 			SPEED -= 2.5
 		else:
@@ -81,6 +87,7 @@ func _physics_process(delta: float) -> void:
 	
 	if is_on_floor() and jumps < 2:
 		jumps = 2
+			
 	elif is_on_wall() and jumps == 0 and not jump_on_wall:
 		jump_on_wall = true
 		jumps = 1
@@ -93,7 +100,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") and !GScript.UI_opened:
 		if jumps > 0:
 			velocity.y = JUMP_VELOCITY
 			jumps -= 1

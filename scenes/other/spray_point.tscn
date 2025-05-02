@@ -25,6 +25,7 @@ radius = 0.0566406
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.14641e-16, 1.41625e-08, -0.06, 0.06, -1.41625e-08, -5.00759e-22, -2.62268e-09, -0.324, -2.62268e-09, 0.001, 0, -0.001)
+visibility_range_end = 20.0
 mesh = SubResource("PlaneMesh_cg44k")
 surface_material_override/0 = SubResource("StandardMaterial3D_cbqm3")
 

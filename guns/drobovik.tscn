@@ -88,7 +88,7 @@ albedo_color = Color(1, 0.792548, 0, 1)
 material = SubResource("StandardMaterial3D_07y72")
 
 [node name="Drobovik" type="MeshInstance3D"]
-transform = Transform3D(9.22717e-05, -0.0999978, 0.000665243, -0.0272199, -0.00066524, -0.0962218, 0.0962241, -9.22931e-05, -0.0272199, 0, 0, 0)
+transform = Transform3D(9.22717e-05, -0.0999978, 0.000665243, -0.0272199, -0.00066524, -0.0962218, 0.0962241, -9.22931e-05, -0.0272199, 0.457354, -0.361548, -0.528553)
 layers = 1023
 mesh = ExtResource("1_07y72")
 script = SubResource("GDScript_07y72")

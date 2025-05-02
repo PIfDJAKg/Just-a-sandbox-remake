@@ -43,7 +43,9 @@ size = Vector3(2.00403, 0.0679932, 1.99734)
 [sub_resource type="BoxShape3D" id="BoxShape3D_h3xc6"]
 size = Vector3(1.0249, 1.07208, 1.00989)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rnaij"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8838"]
+metallic = 1.0
+roughness = 0.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s36qc"]
 size = Vector3(1, 1, 4.80249)
@@ -140,7 +142,7 @@ shape = SubResource("BoxShape3D_h3xc6")
 [node name="MeshInstance3D14" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.0339623, 1.5109, -0.163484)
 mesh = SubResource("BoxMesh_rnaij")
-surface_material_override/0 = SubResource("ShaderMaterial_rnaij")
+surface_material_override/0 = SubResource("StandardMaterial3D_k8838")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D14"]
 
